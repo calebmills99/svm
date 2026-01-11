@@ -55,7 +55,8 @@ class FacebookHTMLParser:
         timestamps = re.findall(patterns[3], self.content)
         
         # Combine into login records
-        max_len = max(len(ips), len(locations), len(devices), len(timestamps))
+        lengths = [len(ips), len(locations), len(devices), len(timestamps)]
+        max_len = max(lengths) if any(lengths) else 0
         
         for i in range(max_len):
             login = {

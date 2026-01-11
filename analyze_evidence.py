@@ -9,7 +9,7 @@ Usage:
     python analyze_evidence.py [--evidence-dir DIRECTORY] [--output OUTPUT_FILE]
 
 Author: Analysis Tool for Caleb Stewart
-Date: 2026-01-11
+Created: January 2024
 """
 
 import os
