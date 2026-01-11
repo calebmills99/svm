@@ -9,10 +9,8 @@ Usage:
     python analyze_evidence.py [--evidence-dir DIRECTORY] [--output OUTPUT_FILE]
 
 Author: Analysis Tool for Caleb Stewart
-Created: January 2024
 """
 
-import os
 import json
 import argparse
 from pathlib import Path
@@ -41,8 +39,6 @@ class EvidenceAnalyzer:
             'pdf': [],
             'html': [],
             'json': [],
-            'php': [],
-            'txt': [],
             'other': []
         }
         
@@ -55,10 +51,6 @@ class EvidenceAnalyzer:
                     files['html'].append(file_path)
                 elif ext == '.json':
                     files['json'].append(file_path)
-                elif ext == '.php':
-                    files['php'].append(file_path)
-                elif ext == '.txt':
-                    files['txt'].append(file_path)
                 else:
                     files['other'].append(file_path)
         

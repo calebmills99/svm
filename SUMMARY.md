@@ -87,7 +87,6 @@ python parse_facebook_html.py evidence/security_and_login_information.html
 
 - **requirements.txt** - Easy installation of all dependencies
 - **.gitignore** - Protects your sensitive files from being committed
-- **Sample evidence files** - Demonstration data to show how tools work
 
 ### Security & Quality
 

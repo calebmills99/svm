@@ -13,7 +13,6 @@ Usage:
 
 from pathlib import Path
 from typing import Dict, List, Any
-from datetime import datetime
 import re
 
 
@@ -201,6 +200,10 @@ class FacebookHTMLParser:
     def generate_summary(self) -> str:
         """Generate a human-readable summary of the parsed data."""
         data = self.parse()
+        
+        # Handle error case
+        if 'error' in data:
+            return f"Error: {data['error']}"
         
         summary = []
         summary.append(f"Analysis of: {data['file']}")
