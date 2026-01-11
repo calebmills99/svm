@@ -10,10 +10,17 @@ This repository was created to investigate a Facebook account breach that occurr
 
 ### Quick Start
 
+**Option 1: Automated Quick Start (Recommended)**
+```bash
+./quickstart.sh
+```
+
+**Option 2: Manual Steps**
 1. **Read the Guide**: Start with [BREACH_ANALYSIS_GUIDE.md](BREACH_ANALYSIS_GUIDE.md) for complete instructions
 2. **Upload Data**: Download your Facebook data and place it in a `facebook_data/` folder
-3. **Run Analysis**: Execute `python3 analyze_breach.py`
-4. **Review Report**: Check the generated `BREACH_REPORT.md` file
+3. **Verify Data**: Run `python3 check_data.py` to verify your data structure
+4. **Run Analysis**: Execute `python3 analyze_breach.py`
+5. **Review Report**: Check the generated `BREACH_REPORT.md` file
 
 ### What This Tool Does
 
@@ -63,6 +70,7 @@ After running the analysis, you'll get:
 
 ### Usage
 
+**Quick Start (Easiest):**
 ```bash
 # Clone this repository
 git clone https://github.com/calebmills99/svm.git
@@ -72,11 +80,22 @@ cd svm
 mkdir facebook_data
 # ... copy your Facebook data here ...
 
+# Run the guided quick start
+./quickstart.sh
+```
+
+**Manual Usage:**
+```bash
+# Verify your data structure
+python3 check_data.py
+
 # Run the analysis
 python3 analyze_breach.py
 
 # Review the results
 cat BREACH_REPORT.md
+cat timeline.txt
+cat suspicious_ips.txt
 ```
 
 ### For Legal Proceedings

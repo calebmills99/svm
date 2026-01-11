@@ -43,6 +43,9 @@ timeline.txt
 suspicious_ips.txt
 analysis_output/
 
+# Test data
+test_data/
+
 # Sensitive data - uncomment if you want to keep Facebook data private
 # facebook_data/
 
