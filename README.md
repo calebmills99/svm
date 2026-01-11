@@ -10,6 +10,10 @@ This repository contains tools to help analyze data downloaded from Meta/Faceboo
 2. **Upload the files** to this repository
 3. **Run the analysis** tools
 
+## 📖 Documentation
+
+**New here?** See **[INDEX.md](INDEX.md)** for a complete guide to all documentation.
+
 ## Quick Start
 
 See **[QUICKSTART.md](QUICKSTART.md)** for step-by-step instructions.
@@ -18,7 +22,7 @@ See **[QUICKSTART.md](QUICKSTART.md)** for step-by-step instructions.
 
 - **`analyze_evidence.py`** - Main analysis script for all file types
 - **`parse_facebook_html.py`** - Specialized HTML parser for Facebook security files
-- **`ANALYSIS_README.md`** - Detailed documentation
+- **Complete documentation** - See [INDEX.md](INDEX.md) for all guides
 - **`requirements.txt`** - Python dependencies
 
 ## Usage
@@ -59,8 +63,15 @@ Your Facebook data may include sensitive information. See `ANALYSIS_README.md` f
 
 ## Documentation
 
-- **[QUICKSTART.md](QUICKSTART.md)** - Quick setup guide
+**📖 [INDEX.md](INDEX.md) - Complete documentation index and navigation guide**
+
+Quick links:
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick setup guide  
+- **[CHECKLIST.md](CHECKLIST.md)** - Complete investigation checklist
+- **[FAQ.md](FAQ.md)** - Frequently asked questions
+- **[EXAMPLES.md](EXAMPLES.md)** - Usage examples
 - **[ANALYSIS_README.md](ANALYSIS_README.md)** - Detailed analysis documentation
+- **[SUMMARY.md](SUMMARY.md)** - Executive summary
 
 ## For Caleb Stewart
 
