@@ -116,8 +116,16 @@ def analyze_content(text: str, user_name: str = "Caleb Stewart") -> Dict[str, An
     # Look for IP addresses
     import re
     ip_pattern = r'\b(?:\d{1,3}\.){3}\d{1,3}\b'
-    ips = re.findall(ip_pattern, text)
-    analysis["ip_addresses"] = list(set(ips))  # Remove duplicates
+    potential_ips = re.findall(ip_pattern, text)
+    
+    # Validate that each octet is in valid range (0-255)
+    valid_ips = []
+    for ip in potential_ips:
+        octets = ip.split('.')
+        if all(0 <= int(octet) <= 255 for octet in octets):
+            valid_ips.append(ip)
+    
+    analysis["ip_addresses"] = list(set(valid_ips))  # Remove duplicates
     
     # Look for geographic locations
     location_keywords = ["location:", "from:", "country:", "city:", "region:"]
@@ -126,10 +134,38 @@ def analyze_content(text: str, user_name: str = "Caleb Stewart") -> Dict[str, An
             if loc_key in line.lower():
                 analysis["login_locations"].append(line.strip())
     
-    # Look for timestamps
-    date_pattern = r'\b\d{1,2}[-/]\d{1,2}[-/]\d{2,4}\b|\b\d{4}[-/]\d{1,2}[-/]\d{1,2}\b'
-    dates = re.findall(date_pattern, text)
-    analysis["timestamps"] = list(set(dates[:20]))  # Limit to first 20 unique dates
+    # Look for timestamps using dateutil for better parsing
+    try:
+        from dateutil import parser as date_parser
+        
+        # Find potential date strings
+        date_patterns = [
+            r'\b\d{1,2}[-/]\d{1,2}[-/]\d{2,4}\b',  # MM/DD/YYYY or DD/MM/YYYY
+            r'\b\d{4}[-/]\d{1,2}[-/]\d{1,2}\b',     # YYYY/MM/DD
+            r'\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},?\s+\d{4}\b',  # Month DD, YYYY
+        ]
+        
+        potential_dates = []
+        for pattern in date_patterns:
+            potential_dates.extend(re.findall(pattern, text, re.IGNORECASE))
+        
+        # Validate dates using dateutil
+        valid_dates = []
+        for date_str in potential_dates:
+            try:
+                parsed_date = date_parser.parse(date_str, fuzzy=False)
+                valid_dates.append(date_str)
+            except (ValueError, date_parser.ParserError):
+                # Skip invalid dates
+                pass
+        
+        analysis["timestamps"] = list(set(valid_dates[:20]))  # Limit to first 20 unique valid dates
+    
+    except ImportError:
+        # Fallback to basic regex if dateutil not available
+        date_pattern = r'\b\d{1,2}[-/]\d{1,2}[-/]\d{2,4}\b|\b\d{4}[-/]\d{1,2}[-/]\d{1,2}\b'
+        dates = re.findall(date_pattern, text)
+        analysis["timestamps"] = list(set(dates[:20]))
     
     # Generate key findings
     if analysis["security_indicators"]:
@@ -294,8 +330,12 @@ def main():
         print("\nNo PDF files found in the current directory.")
         print("\nUsage:")
         print("  1. Place your PDF file(s) in the repository directory")
-        print("  2. Run: python pdf_analyzer.py [filename.pdf]")
+        print("  2. Run: python pdf_analyzer.py [filename.pdf] [user_name]")
         print("  3. Or run without arguments to process all PDFs in the directory")
+        print("\nExamples:")
+        print("  python pdf_analyzer.py facebook_data.pdf")
+        print("  python pdf_analyzer.py facebook_data.pdf \"Caleb Stewart\"")
+        print("  python pdf_analyzer.py  # Process first PDF found")
         
         # Check if a filename was provided as argument
         if len(sys.argv) > 1:
@@ -329,7 +369,9 @@ def main():
     
     # Analyze content
     print("\nAnalyzing content for security indicators...")
-    analysis = analyze_content(text_content, user_name="Caleb Stewart")
+    # Allow user to specify name via command line argument, default to "Caleb Stewart"
+    user_name = sys.argv[2] if len(sys.argv) > 2 else "Caleb Stewart"
+    analysis = analyze_content(text_content, user_name=user_name)
     
     # Save analysis as JSON
     json_output = pdf_path.replace('.pdf', '_analysis.json')
