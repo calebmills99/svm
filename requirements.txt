@@ -1,0 +1,12 @@
+# PDF Processing Libraries
+# Install with: pip install -r requirements.txt
+
+# PyPDF2 - Primary PDF parsing library
+PyPDF2>=3.0.0
+
+# pdfplumber - Alternative PDF parsing library (more robust for complex PDFs)
+pdfplumber>=0.10.0
+
+# Additional useful libraries
+# python-dateutil - For better date parsing
+python-dateutil>=2.8.0
