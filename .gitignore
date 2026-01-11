@@ -6,6 +6,8 @@ evidence/
 # Analysis outputs
 analysis_report.txt
 *_report.txt
+*_extracted_text.txt
+*_analysis.json
 reports/
 
 # Python
@@ -26,9 +28,12 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # Virtual environments
 venv/
