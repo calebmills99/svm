@@ -1,145 +1,112 @@
-# SVM - Security Breach Evidence Analyzer
+# SVM - Security Verification & Monitoring
 
-This repository contains tools to analyze PDF files from Facebook/Meta containing evidence of potential account breaches and unauthorized access.
+## Facebook Account Breach Investigation
 
-## Overview
+This repository contains tools and documentation to help analyze Facebook data downloads for evidence of account breaches and unauthorized access.
 
-This tool is designed to help **Caleb Stewart** analyze Facebook/Meta data downloads that contain evidence of account security breaches. It parses PDF files, extracts relevant security information, and generates detailed reports with implications and recommendations.
+### Background
 
-## Features
+This repository was created to investigate a Facebook account breach that occurred around Christmas Eve 2024. The account was subsequently disabled by Meta, and this analysis aims to identify evidence of the breach for legal proceedings.
 
-- **PDF Text Extraction**: Extracts text content from PDF files
-- **Security Analysis**: Identifies security indicators, suspicious activities, and breach evidence
-- **IP Address Detection**: Finds and lists all IP addresses mentioned in the document
-- **Location Tracking**: Extracts geographic location references
-- **Timestamp Analysis**: Identifies dates and times of activities
-- **Comprehensive Reporting**: Generates detailed reports with findings and implications
-- **Actionable Recommendations**: Provides next steps for security and legal considerations
+### Quick Start
 
-## Installation
+1. **Read the Guide**: Start with [BREACH_ANALYSIS_GUIDE.md](BREACH_ANALYSIS_GUIDE.md) for complete instructions
+2. **Upload Data**: Download your Facebook data and place it in a `facebook_data/` folder
+3. **Run Analysis**: Execute `python3 analyze_breach.py`
+4. **Review Report**: Check the generated `BREACH_REPORT.md` file
 
-1. Clone this repository (or you already have it)
-2. Install required dependencies:
+### What This Tool Does
+
+The analysis tool (`analyze_breach.py`) examines your Facebook data to identify:
+
+- ✅ Suspicious login locations
+- ✅ Unusual login times
+- ✅ Unfamiliar devices and IP addresses
+- ✅ Account changes during the breach period
+- ✅ Chronological timeline of events
+- ✅ Indicators of unauthorized access
+
+### Files in This Repository
+
+**Analysis Tools**
+- `analyze_breach.py` - Main analysis script for JSON data
+- `check_data.py` - Validates Facebook data structure before analysis
+- `quickstart.sh` - Interactive setup flow
+
+**Documentation**
+- `BREACH_ANALYSIS_GUIDE.md` - Complete step-by-step guide
+- `GETTING_STARTED.md` - Quick reference for new users
+- `INDICATORS_OF_COMPROMISE.md` - Checklist of breach indicators
+- `INVESTIGATION_TEMPLATE.md` - Structured template for documenting findings
+
+### Generated Reports
+
+After running the analysis, you'll get:
+
+- `BREACH_REPORT.md` - Detailed findings and recommendations
+- `timeline.txt` - Chronological event timeline
+- `suspicious_ips.txt` - List of suspicious IP addresses
+
+### Privacy & Security
+
+⚠️ **Important**: Before uploading your Facebook data to GitHub:
+
+1. Review all files for personal information
+2. Consider keeping the repository private
+3. Redact sensitive information (messages, phone numbers, etc.)
+4. See the guide for detailed privacy recommendations
+
+### Requirements
+
+- Python 3.6 or higher
+- Your Facebook data download (JSON format)
+
+### Usage
 
 ```bash
-pip install -r requirements.txt
+# Clone this repository
+git clone https://github.com/calebmills99/svm.git
+cd svm
+
+# Add your Facebook data to facebook_data/ folder
+mkdir facebook_data
+# ... copy your Facebook data here ...
+
+# Run the analysis
+python3 analyze_breach.py
+
+# Review the results
+cat BREACH_REPORT.md
 ```
 
-## Usage
+### For Legal Proceedings
 
-### Basic Usage
+This tool helps create a documented record of:
 
-1. Place your Facebook/Meta PDF file(s) in the repository directory
-2. Run the analyzer:
+- When the breach occurred
+- What unauthorized activities took place
+- IP addresses and locations of attackers
+- Timeline of events for court evidence
 
-```bash
-python pdf_analyzer.py
-```
+All generated reports are formatted to be clear and presentable for legal review.
 
-This will automatically process the first PDF file found in the directory.
+### Need Help?
 
-### Specify a PDF File
+If you need assistance:
 
-To analyze a specific PDF file:
+1. Check the [BREACH_ANALYSIS_GUIDE.md](BREACH_ANALYSIS_GUIDE.md)
+2. Ensure your Facebook data is properly extracted
+3. Verify Python 3 is installed: `python3 --version`
+4. Create an issue in this repository with details
 
-```bash
-python pdf_analyzer.py your_facebook_data.pdf
-```
+### Contributing
 
-### Output Files
+This tool was created to help analyze a specific breach case but can be useful for others investigating Facebook account compromises. Contributions to improve the analysis capabilities are welcome.
 
-The analyzer generates three output files for each PDF processed:
+### License
 
-1. **`*_extracted_text.txt`**: Raw text extracted from the PDF
-2. **`*_analysis.json`**: Structured analysis data in JSON format
-3. **`*_report.txt`**: Human-readable detailed report with findings and implications
+This tool is provided as-is for personal use in investigating account security incidents.
 
-## What the Tool Analyzes
+### Disclaimer
 
-The tool searches for and analyzes:
-
-- **Security Keywords**: unauthorized access, breach, compromise, suspicious activity, etc.
-- **IP Addresses**: All IP addresses mentioned in the document
-- **Login Locations**: Geographic locations associated with account access
-- **Timestamps**: Dates and times of activities
-- **Device Information**: Information about devices used to access the account
-- **Session Data**: Login sessions and authentication events
-
-## Report Sections
-
-The generated report includes:
-
-1. **Key Findings**: High-level summary of detected issues
-2. **Security Indicators**: Specific security-related keywords and their context
-3. **IP Addresses**: List of all detected IP addresses
-4. **Location References**: Geographic locations found in the document
-5. **Timestamps**: Chronological data points
-6. **Recommendations**: Actionable steps for security improvement
-7. **Implications**: Legal, security, and practical implications of the findings
-
-## Important Notes
-
-### For Caleb Stewart
-
-This tool is specifically configured for analyzing your Facebook/Meta account breach evidence. The analysis includes:
-
-- Evidence of unauthorized access to your account
-- Potential indicators of hacking or compromise
-- Documentation suitable for legal or security reporting purposes
-- Recommendations for protecting your identity and accounts
-
-### Legal and Security Considerations
-
-- **Keep the Original Files**: Preserve all original PDF files as evidence
-- **Document Everything**: The generated reports can be used for legal purposes
-- **Consult Professionals**: Consider consulting with:
-  - Cybersecurity professionals for technical analysis
-  - Attorneys for legal advice
-  - Law enforcement for criminal matters
-  - Identity theft protection services
-- **Report to Authorities**: Consider filing reports with:
-  - Meta/Facebook support
-  - Local law enforcement
-  - Federal Trade Commission (FTC)
-  - Internet Crime Complaint Center (IC3)
-
-### Privacy and Security
-
-- Do not share the PDF files or reports publicly as they may contain sensitive personal information
-- Store analysis results securely
-- Consider the files contain evidence and handle them appropriately
-
-## Troubleshooting
-
-### PDF Library Issues
-
-If you encounter errors related to PDF parsing, try:
-
-1. Ensure requirements are installed: `pip install -r requirements.txt`
-2. Try updating the libraries: `pip install --upgrade PyPDF2 pdfplumber`
-3. If one library fails, the tool will automatically try the alternative
-
-### No PDF Files Found
-
-Make sure:
-1. PDF files are in the same directory as `pdf_analyzer.py`
-2. Files have the `.pdf` extension
-3. You have read permissions on the files
-
-## Example Workflow
-
-1. Download your Facebook data from Meta (Settings > Your Facebook Information > Download Your Information)
-2. Extract any PDF files containing security or login information
-3. Place the PDF in this repository folder
-4. Run: `python pdf_analyzer.py facebook_security_data.pdf`
-5. Review the generated `*_report.txt` file for findings
-6. Follow the recommendations in the report
-7. Keep all files as evidence if needed for legal purposes
-
-## Support
-
-This tool is designed for personal use to analyze account breach evidence. For technical issues or questions, review the code or modify as needed for your specific use case.
-
-## License
-
-This tool is provided as-is for personal security analysis purposes.
+This tool is designed to help analyze and document Facebook data downloads. It does not guarantee finding all evidence of a breach and should be used as part of a comprehensive security investigation. For legal matters, consult with appropriate legal counsel.
