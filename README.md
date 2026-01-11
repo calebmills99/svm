@@ -8,7 +8,9 @@ This repository contains tools and documentation to help analyze Facebook data d
 
 This repository was created to investigate a Facebook account breach that occurred around Christmas Eve 2024. The account was subsequently disabled by Meta, and this analysis aims to identify evidence of the breach for legal proceedings.
 
-### Quick Start
+## Quick Start
+
+👉 **New User?** Start here: [GETTING_STARTED.md](GETTING_STARTED.md)
 
 **Option 1: Automated Quick Start (Recommended)**
 ```bash
