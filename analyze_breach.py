@@ -6,8 +6,6 @@ This script analyzes Facebook data downloads to identify evidence of account bre
 It examines login history, account activity, and other security-related data to detect
 suspicious patterns and unauthorized access.
 
-Author: GitHub Copilot
-Date: January 2026
 Purpose: Help identify evidence for Facebook account breach case
 """
 
@@ -121,9 +119,9 @@ class FacebookBreachAnalyzer:
                 for fmt in ['%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S', '%m/%d/%Y %H:%M:%S']:
                     try:
                         return datetime.strptime(ts, fmt)
-                    except:
+                    except (ValueError, TypeError):
                         continue
-        except:
+        except (ValueError, TypeError, OSError):
             pass
         return None
     
@@ -192,9 +190,9 @@ class FacebookBreachAnalyzer:
                     content = f.read()
                     # Look for timestamps in the content
                     self._scan_for_timestamps(content, json_file.name)
-            except Exception as e:
-                # Skip files that can't be read
-                pass
+            except (OSError, UnicodeDecodeError) as e:
+                # Skip files that can't be read or aren't text files
+                continue
     
     def _scan_for_timestamps(self, content, filename):
         """Scan content for timestamps around breach date."""

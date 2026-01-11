@@ -6,7 +6,7 @@ Use this template to document your manual investigation findings. Fill in each s
 
 ## Investigation Details
 
-- **Your Name**: Caleb Stewart
+- **Your Name**: _______________
 - **Breach Date**: December 24, 2024 (Christmas Eve)
 - **Account Status**: Disabled by Meta
 - **Investigation Date**: [Fill in today's date]

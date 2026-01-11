@@ -27,7 +27,7 @@ def check_facebook_data():
         print("2. Extract your Facebook data ZIP file")
         print("3. Copy all extracted files into the 'facebook_data' folder")
         print("\nExpected structure:")
-        print("  svm/")
+        print("  repository/")
         print("  ├── facebook_data/")
         print("  │   ├── security_and_login_information/")
         print("  │   ├── messages/")
