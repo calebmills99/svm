@@ -1,0 +1,18 @@
+# Python dependencies for Facebook Evidence Analysis
+
+# Core analysis libraries
+beautifulsoup4>=4.12.0  # For parsing HTML files
+lxml>=5.0.0             # XML/HTML parser
+
+# PDF parsing (optional - install if you have PDF files)
+PyPDF2>=3.0.0           # PDF text extraction
+pdfplumber>=0.10.0      # Advanced PDF parsing and table extraction
+
+# Data handling
+python-dateutil>=2.8.0  # Date parsing and handling
+
+# Optional: For enhanced analysis
+# Uncomment these if needed:
+# pandas>=2.0.0         # Data analysis and manipulation
+# numpy>=1.24.0         # Numerical computing
+# pillow>=10.0.0        # Image processing (for extracting images from PDFs)
