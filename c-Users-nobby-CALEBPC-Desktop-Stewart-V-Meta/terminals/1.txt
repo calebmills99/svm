@@ -1,0 +1,138 @@
+---
+pid: 35232
+cwd: |
+  C:\runb\tealdeer
+last_command: ls target/release
+last_exit_code: 0
+---
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git init
+Initialized empty Git repository in C:/Users/nobby.CALEBPC/Desktop/Stewart_V_Meta/.git/
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git push
+fatal: No configured push destination.
+Either specify the URL from the command-line or configure a remote repository using
+
+    git remote add <name> <url>
+
+and then push using the remote name
+
+    git push <name>
+
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git push svm
+fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream svm master
+
+To have this happen automatically for branches without a tracking
+upstream, see 'push.autoSetupRemote' in 'git help config'.
+
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta>  git push --set-upstream svm master
+error: src refspec master does not match any
+error: failed to push some refs to 'svm'
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta>  git push --set-upstream calebmills99/svm master
+error: src refspec master does not match any
+error: failed to push some refs to 'calebmills99/svm'
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git add remote svm https://github.com/calebmills99/svm?
+fatal: pathspec 'remote' did not match any files
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote add svm https://github.com/calebmills99/svm?.
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote add svm https://github.com/calebmills99/svm?
+error: remote svm already exists.
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> push .
+push: The term 'push' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git push .  
+error: src refspec refs/heads/master does not match any
+error: failed to push some refs to '.'
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git push help
+error: src refspec refs/heads/master does not match any
+error: failed to push some refs to 'help'
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git push --help
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git push --all 
+fatal: https://github.com/calebmills99/svm?./info/refs not valid: is this a git repository?
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote add svm https://github.com/calebmills99/svm?
+error: remote svm already exists.
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote --help
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote set-url --delete svm https://github.com/calebmills99/svm?.
+fatal: Will not delete all non-push URLs
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote set-url --delete  --push svm https://github.com/calebmills99/svm?.
+fatal: could not unset 'remote.svm.pushurl'
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote set-url --delete  --push svm https://github.com/calebmills99/svm?
+fatal: could not unset 'remote.svm.pushurl'
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote remove svm
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote add svm https://github.com/calebmills99/svm?                      
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git push --all                                              
+fatal: https://github.com/calebmills99/svm?/info/refs not valid: is this a git repository?
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote remove svm
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git remote add svm https://github.com/calebmills99/svm
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git push --all       
+Everything up-to-date
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> git pull      
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (4/4), 1.01 KiB | 39.00 KiB/s, done.
+From https://github.com/calebmills99/svm
+ * [new branch]      copilot/compile-evidence-facebook-account-breach -> svm/copilot/compile-evidence-facebook-account-breach
+ * [new branch]      main       -> svm/main
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=svm/<branch> master
+
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> tldr git      
+tldr: The term 'tldr' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\nobby.CALEBPC\Desktop\Stewart_V_Meta> cd \runb     
+PS C:\runb> gh repo clone tealdeer-rs/tealdeer
+fatal: destination path 'tealdeer' already exists and is not an empty directory.
+failed to run git: exit status 128
+PS C:\runb> cd tealdeer      
+PS C:\runb\tealdeer> ls
+
+    Directory: C:\runb\tealdeer
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----            1/9/2026  8:39 AM                .github
+d----            1/9/2026  8:39 AM                benchmarks
+d----            1/9/2026  8:39 AM                completion
+d----            1/9/2026  8:39 AM                docs
+d----            1/9/2026  8:39 AM                scripts
+d----            1/9/2026  8:39 AM                src
+d----            1/9/2026  8:41 AM                target
+d----            1/9/2026  8:39 AM                tests
+-a---            1/9/2026  8:39 AM            184 .editorconfig
+-a---            1/9/2026  8:39 AM             47 .gitattributes
+-a---            1/9/2026  8:39 AM             48 .gitignore
+-a---            1/9/2026  8:39 AM          46241 Cargo.lock
+-a---            1/9/2026  8:39 AM           2008 Cargo.toml
+-a---            1/9/2026  8:39 AM          28736 CHANGELOG.md
+-a---            1/9/2026  8:39 AM          65420 deer.png
+-a---            1/9/2026  8:39 AM         418806 deer.svg
+-a---            1/9/2026  8:39 AM           9899 LICENSE-APACHE
+-a---            1/9/2026  8:39 AM           1098 LICENSE-MIT
+-a---            1/9/2026  8:39 AM           5495 README.md
+-a---            1/9/2026  8:39 AM            590 RELEASING.md
+-a---            1/9/2026  8:39 AM             58 rustfmt.toml
+
+PS C:\runb\tealdeer> ls target/release
+
+    Directory: C:\runb\tealdeer\target\release
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----            1/9/2026  8:39 AM                .fingerprint
+d----            1/9/2026  8:39 AM                build
+d----            1/9/2026  8:41 AM                deps
+-a---            1/9/2026  8:39 AM              0 .cargo-lock
+-a---            1/9/2026  8:41 AM            358 tldr.d
+-a---            1/9/2026  8:41 AM        3486208 tldr.exe
+-a---            1/9/2026  8:41 AM        2265088 tldr.pdb
+
+PS C:\runb\tealdeer> C:\runb\tealdeer\target\release
