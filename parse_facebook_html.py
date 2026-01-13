@@ -12,8 +12,15 @@ Usage:
 """
 
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 import re
+
+# Try to import BeautifulSoup for robust HTML parsing
+try:
+    from bs4 import BeautifulSoup
+    HAS_BS4 = True
+except ImportError:
+    HAS_BS4 = False
 
 
 class FacebookHTMLParser:
@@ -23,11 +30,16 @@ class FacebookHTMLParser:
         """Initialize parser with HTML file path."""
         self.html_file = Path(html_file)
         self.content = ""
+        self.soup: Optional['BeautifulSoup'] = None
         self.data = {}
         
         if self.html_file.exists():
             with open(self.html_file, 'r', encoding='utf-8') as f:
                 self.content = f.read()
+            
+            # Parse with BeautifulSoup if available
+            if HAS_BS4 and self.content:
+                self.soup = BeautifulSoup(self.content, 'lxml')
     
     def extract_login_history(self) -> List[Dict[str, Any]]:
         """Extract login history from security HTML files."""
@@ -142,12 +154,51 @@ class FacebookHTMLParser:
             'logins': [],
             'devices': [],
             'locations': [],
-            'ips': []
+            'ips': [],
+            'all_rows': []
         }
         
-        # Look for table-like structures (common in Facebook exports)
-        # This is a simplified extraction - may need enhancement based on actual format
+        # Use BeautifulSoup if available for robust parsing
+        if HAS_BS4 and self.soup:
+            return self._extract_with_beautifulsoup(data)
+        else:
+            return self._extract_with_regex(data)
+    
+    def _extract_with_beautifulsoup(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """Extract data using BeautifulSoup for robust HTML parsing."""
+        if not self.soup:
+            return data
         
+        # Find all tables
+        for table in self.soup.find_all('table'):
+            for row in table.find_all('tr'):
+                cells = row.find_all(['td', 'th'])
+                cleaned_cells = [cell.get_text(strip=True) for cell in cells]
+                
+                if cleaned_cells and any(cell for cell in cleaned_cells):
+                    row_text = ' '.join(cleaned_cells).lower()
+                    data['all_rows'].append(cleaned_cells)
+                    
+                    # Categorize based on content
+                    if any(word in row_text for word in ['login', 'session', 'logged in']):
+                        data['logins'].append(cleaned_cells)
+                    if 'device' in row_text or 'browser' in row_text or 'chrome' in row_text or 'safari' in row_text:
+                        data['devices'].append(cleaned_cells)
+                    if 'location' in row_text or 'city' in row_text:
+                        data['locations'].append(cleaned_cells)
+        
+        # Also extract divs with security-like content (Facebook uses divs heavily)
+        for div in self.soup.find_all('div'):
+            text = div.get_text(strip=True)
+            if len(text) > 10 and len(text) < 500:  # Reasonable text length
+                text_lower = text.lower()
+                if any(kw in text_lower for kw in ['ip address', 'device', 'location', 'browser', 'login']):
+                    data['all_rows'].append([text])
+        
+        return data
+    
+    def _extract_with_regex(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """Fallback regex-based extraction when BeautifulSoup is unavailable."""
         # Extract tables using basic pattern matching
         table_pattern = r'<table[^>]*>(.*?)</table>'
         tables = re.findall(table_pattern, self.content, re.DOTALL | re.IGNORECASE)
@@ -171,8 +222,8 @@ class FacebookHTMLParser:
                 
                 # Store if we have data
                 if cleaned_cells and any(cell for cell in cleaned_cells):
-                    # Try to categorize based on content
                     row_text = ' '.join(cleaned_cells).lower()
+                    data['all_rows'].append(cleaned_cells)
                     
                     if any(word in row_text for word in ['login', 'session']):
                         data['logins'].append(cleaned_cells)

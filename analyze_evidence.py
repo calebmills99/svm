@@ -38,8 +38,7 @@ class EvidenceAnalyzer:
         files = {
             'pdf': [],
             'html': [],
-            'json': [],
-            'other': []
+            'json': []
         }
         
         for file_path in self.evidence_dir.rglob('*'):
@@ -51,8 +50,7 @@ class EvidenceAnalyzer:
                     files['html'].append(file_path)
                 elif ext == '.json':
                     files['json'].append(file_path)
-                else:
-                    files['other'].append(file_path)
+                # Skip other file types - they're not analyzed
         
         return files
     
@@ -132,15 +130,97 @@ class EvidenceAnalyzer:
                 print(f"   ✗ Error reading {html_file.name}: {e}")
     
     def analyze_pdf_files(self, pdf_files: List[Path]):
-        """Analyze PDF files."""
-        print("\n📄 PDF files found (requires PDF parsing library):")
+        """Analyze PDF files for security-relevant information."""
+        print("\n📄 Analyzing PDF files...")
+        
+        # Try to import PDF libraries
+        pdf_reader = None
+        try:
+            import pdfplumber
+            pdf_reader = 'pdfplumber'
+        except ImportError:
+            try:
+                import PyPDF2
+                pdf_reader = 'PyPDF2'
+            except ImportError:
+                print("   ⚠️  PDF libraries not available. Install with:")
+                print("      pip install PyPDF2 pdfplumber")
+                for pdf_file in pdf_files:
+                    print(f"   • Skipped: {pdf_file.name}")
+                return
         
         for pdf_file in pdf_files:
-            print(f"   • {pdf_file.name}")
-            
-        if pdf_files:
-            print(f"\n   Note: Install 'PyPDF2' or 'pdfplumber' to extract PDF text:")
-            print(f"   pip install PyPDF2 pdfplumber")
+            try:
+                text = ""
+                
+                if pdf_reader == 'pdfplumber':
+                    import pdfplumber
+                    with pdfplumber.open(pdf_file) as pdf:
+                        for page in pdf.pages:
+                            page_text = page.extract_text()
+                            if page_text:
+                                text += page_text + "\n"
+                else:
+                    import PyPDF2
+                    with open(pdf_file, 'rb') as f:
+                        reader = PyPDF2.PdfReader(f)
+                        for page in reader.pages:
+                            page_text = page.extract_text()
+                            if page_text:
+                                text += page_text + "\n"
+                
+                if text:
+                    print(f"   ✓ Extracted text from: {pdf_file.name}")
+                    
+                    # Analyze extracted text for security indicators
+                    self._analyze_pdf_text(text, pdf_file.name)
+                else:
+                    print(f"   ⚠️  No text extracted from: {pdf_file.name}")
+                    
+            except Exception as e:
+                print(f"   ✗ Error reading {pdf_file.name}: {e}")
+    
+    def _analyze_pdf_text(self, text: str, source: str):
+        """Analyze extracted PDF text for security indicators."""
+        # Look for security-related keywords
+        suspicious_keywords = [
+            'unauthorized', 'breach', 'hacked', 'compromised',
+            'suspicious activity', 'unrecognized', 'unknown device',
+            'failed login', 'password changed', 'security alert',
+            'account recovery', 'two-factor', 'verification'
+        ]
+        
+        text_lower = text.lower()
+        
+        for keyword in suspicious_keywords:
+            if keyword in text_lower:
+                # Find context around the keyword
+                idx = text_lower.find(keyword)
+                start = max(0, idx - 50)
+                end = min(len(text), idx + len(keyword) + 100)
+                context = text[start:end].replace('\n', ' ').strip()
+                
+                self.suspicious_activities.append({
+                    'source': source,
+                    'keyword': keyword,
+                    'context': context,
+                    'type': 'pdf_keyword_match'
+                })
+        
+        # Extract IP addresses
+        import re
+        ip_pattern = r'\b(?:\d{1,3}\.){3}\d{1,3}\b'
+        ips = re.findall(ip_pattern, text)
+        
+        for ip in set(ips):
+            # Basic validation: each octet should be 0-255
+            octets = ip.split('.')
+            if all(0 <= int(o) <= 255 for o in octets):
+                self.findings.append({
+                    'source': source,
+                    'type': 'ip_address',
+                    'value': ip
+                })
     
     def generate_report(self) -> str:
         """Generate a human-readable analysis report."""
