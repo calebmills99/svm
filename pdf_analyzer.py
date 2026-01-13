@@ -91,7 +91,7 @@ def extract_text_from_docx(docx_path: str) -> str:
         
         print(f"Processing {len(doc.paragraphs)} paragraphs...")
         
-        for para_num, paragraph in enumerate(doc.paragraphs, 1):
+        for paragraph in doc.paragraphs:
             if paragraph.text.strip():
                 text_content.append(paragraph.text)
         
@@ -182,8 +182,16 @@ def extract_text_from_file(file_path: str) -> str:
     
     if ext == '.pdf':
         return extract_text_from_pdf(file_path)
-    elif ext in ['.docx', '.doc']:
+    elif ext == '.docx':
         return extract_text_from_docx(file_path)
+    elif ext == '.doc':
+        print(f"Warning: Legacy DOC format not fully supported. Please convert to DOCX for best results.")
+        # Try to process as DOCX anyway (some tools save as .doc but use DOCX format)
+        try:
+            return extract_text_from_docx(file_path)
+        except Exception as e:
+            print(f"Error: Could not process DOC file: {e}")
+            return ""
     elif ext == '.txt':
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
