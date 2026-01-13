@@ -8,7 +8,10 @@ This tool is designed to help **Caleb Stewart** analyze Facebook/Meta data downl
 
 ## Features
 
+- **Automatic Recent File Scanning**: Scans the 5 most recent file additions to the repository
+- **Multi-Format Support**: Analyzes PDF, DOCX, DOC, and TXT files
 - **PDF Text Extraction**: Extracts text content from PDF files
+- **DOCX Text Extraction**: Extracts text content from Microsoft Word documents
 - **Security Analysis**: Identifies security indicators, suspicious activities, and breach evidence
 - **IP Address Detection**: Finds and lists all IP addresses mentioned in the document
 - **Location Tracking**: Extracts geographic location references
@@ -27,6 +30,20 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Scan Recent Additions (Recommended)
+
+The analyzer can automatically scan the five most recent file additions to the repository for breach evidence:
+
+```bash
+python pdf_analyzer.py --recent
+```
+
+This will:
+- Identify the 5 most recent files added to the repository via Git
+- Support PDF, DOCX, DOC, and TXT files
+- Generate analysis reports for each file
+- Create comprehensive breach evidence reports
+
 ### Basic Usage
 
 1. Place your Facebook/Meta PDF file(s) in the repository directory
@@ -40,10 +57,11 @@ This will automatically process the first PDF file found in the directory.
 
 ### Specify a PDF File
 
-To analyze a specific PDF file:
+To analyze a specific PDF or DOCX file:
 
 ```bash
 python pdf_analyzer.py your_facebook_data.pdf
+python pdf_analyzer.py security_file.docx
 ```
 
 ### Output Files

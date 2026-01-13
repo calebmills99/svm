@@ -7,6 +7,9 @@ PyPDF2>=3.0.0
 # pdfplumber - Alternative PDF parsing library (more robust for complex PDFs)
 pdfplumber>=0.10.0
 
+# python-docx - For DOCX file parsing
+python-docx>=0.8.11
+
 # Additional useful libraries
 # python-dateutil - For better date parsing
 python-dateutil>=2.8.0
